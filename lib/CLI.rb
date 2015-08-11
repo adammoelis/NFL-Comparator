@@ -67,10 +67,17 @@ class Ranking_CLI
         get_user_input
       end
       player_generator(@user_input)
-      create_vote_hash
       display_player_names
-      select_player
+      select_player 
+      case @user_input
+        when "qb" then update_qb_hash 
+        when "rb" then update_rb_hash 
+        when "wr" then update_wr_hash 
+        when "te" then update_te_hash 
+        when "k" then update_k_hash 
       
+      end
+    binding.pry 
     end
    
 
@@ -114,21 +121,34 @@ class Ranking_CLI
   end
 
   def select_player
-    @user_input = get_user_input
-    @vote_hash[@player1_hash["displayName"]] += 1 if @user_input == "1"
-    @vote_hash[@player2_hash["displayName"]] += 1 if @user_input == "2"
+    @player_selection = gets.chomp 
     
   end
 
-  def create_vote_hash
-
-      @vote_hash = @position_array.each_with_object({}) do |player_hash, new_hash|
-        new_hash[player_hash["displayName"]] = player_hash["votes"]
-      end
-      
+  def update_qb_hash
+    @@qb_vote_hash[@player1_hash["displayName"]] += 1 if @player_selection == "1"
+    @@qb_vote_hash[@player2_hash["displayName"]] += 1 if @player_selection == "2"
   end
 
+  def update_rb_hash
+    @@rb_vote_hash[@player1_hash["displayName"]] += 1 if @player_selection == "1"
+    @@rb_vote_hash[@player2_hash["displayName"]] += 1 if @player_selection == "2"
+  end
 
+  def update_wr_hash
+    @@wr_vote_hash[@player1_hash["displayName"]] += 1 if @player_selection == "1"
+    @@wr_vote_hash[@player2_hash["displayName"]] += 1 if @player_selection == "2"
+  end
+
+  def update_te_hash
+    @@te_vote_hash[@player1_hash["displayName"]] += 1 if @player_selection == "1"
+    @@te_vote_hash[@player2_hash["displayName"]] += 1 if @player_selection == "2"
+  end
+
+  def update_k_hash
+    @@k_vote_hash[@player1_hash["displayName"]] += 1 if @player_selection == "1"
+    @@k_vote_hash[@player2_hash["displayName"]] += 1 if @player_selection == "2"
+  end
 
 
 end

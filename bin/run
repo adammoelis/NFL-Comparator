@@ -3,6 +3,7 @@ require_relative '../config/environment'
 
 
 test = Ranking_CLI.new
+test.run
 binding.pry
 
 
