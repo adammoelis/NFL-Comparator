@@ -77,7 +77,7 @@ class Ranking_CLI
         when "k" then update_k_hash 
       
       end
-    binding.pry 
+    
     end
    
 
@@ -85,10 +85,12 @@ class Ranking_CLI
 
   def initial_menu
     puts "Welcome to a Crowd-Sourced Fantasy Football Ranking System"
+    puts "=========================================================="
   end
 
   def menu
     puts "What position would you like to choose (QB, RB, WR, TE, K, exit to quit)?"
+    puts "========================================================================="
 
   end
 
@@ -103,9 +105,11 @@ class Ranking_CLI
   end
 
   def display_player_names
+    puts "========================================================================="
     puts "1.#{@player1_hash["displayName"]}\nvs.\n2.#{@player2_hash["displayName"]}"
+    puts "========================================================================="
     puts "Choose 1 to select #{@player1_hash["displayName"]} or 2 to select #{@player2_hash["displayName"]}"
-
+    puts "================================================================================================="
   end
   
 
@@ -122,7 +126,6 @@ class Ranking_CLI
 
   def select_player
     @player_selection = gets.chomp 
-    
   end
 
   def update_qb_hash
@@ -149,7 +152,6 @@ class Ranking_CLI
     @@k_vote_hash[@player1_hash["displayName"]] += 1 if @player_selection == "1"
     @@k_vote_hash[@player2_hash["displayName"]] += 1 if @player_selection == "2"
   end
-
 
 end
 
