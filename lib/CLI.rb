@@ -5,10 +5,6 @@ class Ranking_CLI
 
   VALID_COMMANDS ||= ["qb", "rb", "wr", "te", "k", "exit"]
 
-
-  
-  
-
   def initialize
     @@qb_vote_hash ||= Create_PStore_Vote_Hash.new.qb_hash
     @@wr_vote_hash ||= Create_PStore_Vote_Hash.new.wr_hash
@@ -16,6 +12,20 @@ class Ranking_CLI
     @@te_vote_hash ||= Create_PStore_Vote_Hash.new.te_hash
     @@k_vote_hash ||= Create_PStore_Vote_Hash.new.k_hash
   end
+
+  def sort(pstore_object)
+    pstore_object.transaction(true) do
+      @player_hash = {}
+      pstore_object.roots.each do |player_name|
+        @player_hash[player_name] = pstore_object[player_name]
+      end
+    end
+    @top_player_votes_array = @player_hash.sort_by {|player_name, votes| votes}.reverse.first(10)
+    @top_player_votes_array.each.with_index(1) do |array, index|
+      puts "#{index}. #{array[0]} - #{array[1]}"
+    end
+  end
+
 
   def self.qb_vote_hash
     @@qb_vote_hash.transaction(true) do
@@ -77,7 +87,6 @@ class Ranking_CLI
         when "wr" then update_wr_hash 
         when "te" then update_te_hash 
         when "k" then update_k_hash 
-      
       end
       binding.pry
     end
@@ -118,7 +127,11 @@ class Ranking_CLI
 
   def get_user_input
     @user_input = gets.chomp.downcase
-    abort if @user_input == "exit"
+    if @user_input == "exit"
+      puts "==============================================="
+      #Method that lists the top 10 players in each position
+      abort
+    end
     @user_input
   end
 
