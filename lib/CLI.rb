@@ -79,7 +79,6 @@ class Ranking_CLI
 
   def sort_converted_pstore_hash_to_rankings(player_hash, num_rankings)
     @top_player_votes_array = player_hash.sort_by {|player_name, votes| votes}.reverse.first(num_rankings)
-    binding.pry
     @top_player_votes_array.each.with_index(1) do |array, index|
       puts "#{index}. #{array[0]} - #{array[1]}"
     end
