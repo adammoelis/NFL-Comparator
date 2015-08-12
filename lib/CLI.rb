@@ -14,6 +14,32 @@ class Ranking_CLI
     @@k_vote_hash ||= Create_PStore_Vote_Hash.new.k_hash
   end
 
+  def run
+    initial_menu
+    loop do
+      menu
+      get_user_input  
+      while invalid_input?
+        menu
+        get_user_input
+      end
+      player_generator(@user_input)
+      display_player_names
+      select_player
+      while invalid_player_selection?
+        select_player
+      end 
+      case @user_input
+        when "qb" then update_qb_hash 
+        when "rb" then update_rb_hash 
+        when "wr" then update_wr_hash 
+        when "te" then update_te_hash 
+        when "k" then update_k_hash 
+      end
+      # binding.pry
+    end
+  end
+
   def self.reset_qb
     @@qb_vote_hash.set_values_to_zero
   end
@@ -101,33 +127,7 @@ class Ranking_CLI
   end
 
 
-  def run
-    initial_menu
-    loop do
-      menu
-      get_user_input  
-      while invalid_input?
-        menu
-        get_user_input
-      end
-      player_generator(@user_input)
-      display_player_names
-      select_player
-      while invalid_player_selection?
-        select_player
-      end 
-      case @user_input
-        when "qb" then update_qb_hash 
-        when "rb" then update_rb_hash 
-        when "wr" then update_wr_hash 
-        when "te" then update_te_hash 
-        when "k" then update_k_hash 
-      end
-      # binding.pry
-    end
-   
 
-  end
 
   def initial_menu
     puts "Welcome to a Crowd-Sourced Fantasy Football Ranking System"
