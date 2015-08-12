@@ -13,14 +13,18 @@ class Ranking_CLI
     @@k_vote_hash ||= Create_PStore_Vote_Hash.new.k_hash
   end
 
-  def sort(pstore_object)
+  def convert_pstore_to_hash(pstore_object)
     pstore_object.transaction(true) do
       @player_hash = {}
       pstore_object.roots.each do |player_name|
         @player_hash[player_name] = pstore_object[player_name]
       end
     end
-    @top_player_votes_array = @player_hash.sort_by {|player_name, votes| votes}.reverse.first(10)
+    @player_hash
+  end
+
+  def sort_converted_pstore_hash_to_rankings(player_hash, num_rankings)
+    @top_player_votes_array = player_hash.sort_by {|player_name, votes| votes}.reverse.first(num_rankings)
     @top_player_votes_array.each.with_index(1) do |array, index|
       puts "#{index}. #{array[0]} - #{array[1]}"
     end
@@ -88,7 +92,7 @@ class Ranking_CLI
         when "te" then update_te_hash 
         when "k" then update_k_hash 
       end
-      binding.pry
+      # binding.pry
     end
    
 
@@ -128,8 +132,22 @@ class Ranking_CLI
   def get_user_input
     @user_input = gets.chomp.downcase
     if @user_input == "exit"
-      puts "==============================================="
-      #Method that lists the top 10 players in each position
+      puts "================================================================================"
+      puts "Top 5 Quarterbacks"
+      sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@qb_vote_hash),5)
+      puts "================================================================================"
+      puts "Top 5 Wide Receivers"
+      sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@wr_vote_hash),5)
+      puts "================================================================================"
+      puts "Top 5 Running Backs"
+      sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@rb_vote_hash),5)
+      puts "================================================================================"
+      puts "Top 5 Tight Ends"
+      sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@te_vote_hash),5)
+      puts "================================================================================"
+      puts "Top 5 Kickers"
+      sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@k_vote_hash),5)
+      puts "================================================================================"
       abort
     end
     @user_input
