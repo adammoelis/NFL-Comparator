@@ -4,6 +4,7 @@ class Ranking_CLI
   attr_reader :player1_hash, :player2_hash, :vote_hash
 
   VALID_COMMANDS ||= ["qb", "rb", "wr", "te", "k", "exit"]
+  SELECT_PLAYER_VALID_COMMANDS ||= ["1","2"]
 
   def initialize
     @@qb_vote_hash ||= Create_PStore_Vote_Hash.new.qb_hash
@@ -12,6 +13,14 @@ class Ranking_CLI
     @@te_vote_hash ||= Create_PStore_Vote_Hash.new.te_hash
     @@k_vote_hash ||= Create_PStore_Vote_Hash.new.k_hash
   end
+
+  # def self.reset_all
+  #   @@qb_vote_hash ||= Create_PStore_Vote_Hash.new.qb_hash
+  #   @@wr_vote_hash ||= Create_PStore_Vote_Hash.new.wr_hash
+  #   @@rb_vote_hash ||= Create_PStore_Vote_Hash.new.rb_hash
+  #   @@te_vote_hash ||= Create_PStore_Vote_Hash.new.te_hash
+  #   @@k_vote_hash ||= Create_PStore_Vote_Hash.new.k_hash
+  # end
 
   def convert_pstore_to_hash(pstore_object)
     pstore_object.transaction(true) do
@@ -76,15 +85,17 @@ class Ranking_CLI
     initial_menu
     loop do
       menu
-      get_user_input
-      
+      get_user_input  
       while invalid_input?
         menu
         get_user_input
       end
       player_generator(@user_input)
       display_player_names
-      select_player 
+      select_player
+      while invalid_player_selection?
+        select_player
+      end 
       case @user_input
         when "qb" then update_qb_hash 
         when "rb" then update_rb_hash 
@@ -131,26 +142,27 @@ class Ranking_CLI
 
   def get_user_input
     @user_input = gets.chomp.downcase
-    if @user_input == "exit"
-      puts "================================================================================"
-      puts "Top 5 Quarterbacks"
-      sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@qb_vote_hash),5)
-      puts "================================================================================"
-      puts "Top 5 Wide Receivers"
-      sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@wr_vote_hash),5)
-      puts "================================================================================"
-      puts "Top 5 Running Backs"
-      sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@rb_vote_hash),5)
-      puts "================================================================================"
-      puts "Top 5 Tight Ends"
-      sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@te_vote_hash),5)
-      puts "================================================================================"
-      puts "Top 5 Kickers"
-      sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@k_vote_hash),5)
-      puts "================================================================================"
-      abort
-    end
-    @user_input
+    @user_input == "exit" ? exit : @user_input
+  end
+
+  def exit
+    puts "================================================================================"
+    puts "Top 5 Quarterbacks"
+    sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@qb_vote_hash),5)
+    puts "================================================================================"
+    puts "Top 5 Wide Receivers"
+    sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@wr_vote_hash),5)
+    puts "================================================================================"
+    puts "Top 5 Running Backs"
+    sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@rb_vote_hash),5)
+    puts "================================================================================"
+    puts "Top 5 Tight Ends"
+    sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@te_vote_hash),5)
+    puts "================================================================================"
+    puts "Top 5 Kickers"
+    sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@k_vote_hash),5)
+    puts "================================================================================"
+    abort
   end
 
   def invalid_input?
@@ -158,8 +170,16 @@ class Ranking_CLI
     !VALID_COMMANDS.include?(@user_input)
   end
 
+  def invalid_player_selection?
+    puts "==================================="
+    puts "Invalid input. Please select 1 or 2" if !SELECT_PLAYER_VALID_COMMANDS.include?(@player_selection)
+    !SELECT_PLAYER_VALID_COMMANDS.include?(@player_selection)
+  end
+
   def select_player
-    @player_selection = gets.chomp 
+    @player_selection = gets.chomp.downcase 
+    exit if @player_selection == "exit"
+    @player_selection
   end
 
   def update_qb_hash
