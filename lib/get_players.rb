@@ -72,12 +72,9 @@ class Get_Player_Data
     assign_rankings
     limit_to_ranked
   end
-
-
-
 end
 
-# test = Get_Player_Data.new("K")
+# test = Get_Player_Data.new("QB")
 # test.run
 
 # qb = Get_Player_Data.new("QB")
