@@ -3,7 +3,7 @@ require_relative '../config/environment'
 
 
 test = Ranking_CLI.new
-Ranking_CLI.reset_all
+# Ranking_CLI.reset_all
 test.run
 
 

@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    asciiart (0.0.9)
+      rainbow (= 2.0.0)
+      rmagick (= 2.13.4)
+    rainbow (2.0.0)
+    rmagick (2.13.4)
+    smart_colored (1.1.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  asciiart
+  smart_colored
+
+BUNDLED WITH
+   1.10.6
