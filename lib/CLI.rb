@@ -126,9 +126,6 @@ class Ranking_CLI
     end
   end
 
-
-
-
   def initial_menu
     puts "Welcome to a Crowd-Sourced Fantasy Football Ranking System"
     
@@ -140,7 +137,6 @@ class Ranking_CLI
     puts "========================================================================="
 
   end
-
 
   def player_generator(position)
     @position = position
@@ -156,7 +152,7 @@ class Ranking_CLI
     puts "1.#{@player1_hash["displayName"]}\nvs.\n2.#{@player2_hash["displayName"]}"
     puts "========================================================================="
     puts "Choose 1 to select #{@player1_hash["displayName"]} or 2 to select #{@player2_hash["displayName"]}"
-    puts "================================================================================================="
+    puts "========================================================================="
   end
   
 
@@ -166,22 +162,22 @@ class Ranking_CLI
   end
 
   def exit
-    puts "================================================================================"
+    puts "=========================================================================="
     puts "Top 5 Quarterbacks"
     sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@qb_vote_hash),5)
-    puts "================================================================================"
+    puts "=========================================================================="
     puts "Top 5 Wide Receivers"
     sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@wr_vote_hash),5)
-    puts "================================================================================"
+    puts "=========================================================================="
     puts "Top 5 Running Backs"
     sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@rb_vote_hash),5)
-    puts "================================================================================"
+    puts "=========================================================================="
     puts "Top 5 Tight Ends"
     sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@te_vote_hash),5)
-    puts "================================================================================"
+    puts "=========================================================================="
     puts "Top 5 Kickers"
     sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@k_vote_hash),5)
-    puts "================================================================================"
+    puts "=========================================================================="
     abort
   end
 
@@ -191,8 +187,11 @@ class Ranking_CLI
   end
 
   def invalid_player_selection?
-    puts "==================================="
-    puts "Invalid input. Please select 1 or 2" if !SELECT_PLAYER_VALID_COMMANDS.include?(@player_selection)
+    if !SELECT_PLAYER_VALID_COMMANDS.include?(@player_selection)
+      puts "==================================="
+      puts "Invalid input. Please select 1 or 2" 
+      puts "==================================="
+    end
     !SELECT_PLAYER_VALID_COMMANDS.include?(@player_selection)
   end
 
