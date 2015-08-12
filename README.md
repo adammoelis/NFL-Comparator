@@ -17,5 +17,7 @@ To retrieve player data, we used the [Fantasy Football Nerd API](http://www.fant
 
 Data persistence is managed through [PStore](http://ruby-doc.org/stdlib-2.2.2/libdoc/pstore/rdoc/PStore.html).
 
+[For information on converting images to ASCII art and running in Ruby](https://www.ruby-forum.com/topic/4418595) 
+
 Thanks to PStore, Fantasy Football Nerd, and also to the NFL for the sweet logo. 
 
