@@ -14,13 +14,33 @@ class Ranking_CLI
     @@k_vote_hash ||= Create_PStore_Vote_Hash.new.k_hash
   end
 
-  # def self.reset_all
-  #   @@qb_vote_hash ||= Create_PStore_Vote_Hash.new.qb_hash
-  #   @@wr_vote_hash ||= Create_PStore_Vote_Hash.new.wr_hash
-  #   @@rb_vote_hash ||= Create_PStore_Vote_Hash.new.rb_hash
-  #   @@te_vote_hash ||= Create_PStore_Vote_Hash.new.te_hash
-  #   @@k_vote_hash ||= Create_PStore_Vote_Hash.new.k_hash
-  # end
+  def self.reset_qb
+    @@qb_vote_hash.set_values_to_zero
+  end
+  
+  def self.reset_wr
+    @@wr_vote_hash.set_values_to_zero
+  end
+  
+  def self.reset_rb
+    @@rb_vote_hash.set_values_to_zero
+  end
+  
+  def self.reset_te
+    @@te_vote_hash.set_values_to_zero
+  end
+  
+  def self.reset_k
+    @@k_vote_hash.set_values_to_zero
+  end
+
+  def self.reset_all
+    self.reset_qb
+    self.reset_wr
+    self.reset_rb
+    self.reset_te
+    self.reset_k
+  end
 
   def convert_pstore_to_hash(pstore_object)
     pstore_object.transaction(true) do
@@ -223,6 +243,19 @@ class Ranking_CLI
   end
 
 end
+
+class PStore
+
+  def set_values_to_zero
+    self.transaction do
+      self.roots.each do |player_name|
+        self[player_name] = 0
+      end
+    end
+  end
+
+end
+
 
 
   

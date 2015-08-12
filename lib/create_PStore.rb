@@ -65,6 +65,6 @@ class Create_PStore_Vote_Hash
     end
     @@k_vote_hash
   end
-  
+
 
 end
