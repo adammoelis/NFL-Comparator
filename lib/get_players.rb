@@ -46,6 +46,8 @@ class Get_Player_Data
     add_vote_key
   end
 
+  
+
 end
 
 # qb = Get_Player_Data.new("QB")
