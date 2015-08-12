@@ -11,6 +11,10 @@ class Ranking_CLI
 
   def initialize
     @@qb_vote_hash ||= Create_PStore_Vote_Hash.new.qb_hash
+    @@wr_vote_hash ||= Create_PStore_Vote_Hash.new.wr_hash
+    @@rb_vote_hash ||= Create_PStore_Vote_Hash.new.rb_hash
+    @@te_vote_hash ||= Create_PStore_Vote_Hash.new.te_hash
+    @@k_vote_hash ||= Create_PStore_Vote_Hash.new.k_hash
   end
 
   def self.qb_vote_hash
