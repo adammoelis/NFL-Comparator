@@ -133,9 +133,9 @@ class Ranking_CLI
   end
 
   def menu
-    puts "========================================================================="
+    puts "========================================================================================================"
     puts "What position would you like to choose (QB, RB, WR, TE, K, exit to quit)?".bold
-    puts "========================================================================="
+    puts "========================================================================================================"
 
   end
 
@@ -149,11 +149,11 @@ class Ranking_CLI
   end
 
   def display_player_names
-    puts "========================================================================="
-    puts "1.#{@player1_hash["displayName"]}(Team: #{@player1_hash["team"]}, College: #{@player1_hash["college"]}, Height: #{@player1_hash["height"]}, Weight: #{@player1_hash["weight"]} lbs) \nvs.\n2.#{@player2_hash["displayName"]}(Team: #{@player2_hash["team"]}, College: #{@player2_hash["college"]}, Height: #{@player1_hash["height"]}, Weight: #{@player1_hash["weight"]} lbs)".bold
-    puts "========================================================================="
+    puts "========================================================================================================"
+    puts "1.#{@player1_hash["displayName"]}(Team: #{@player1_hash["team"]}, College: #{@player1_hash["college"]}, Height: #{@player1_hash["height"]}, Weight: #{@player1_hash["weight"]} lbs) \nvs.\n2.#{@player2_hash["displayName"]}(Team: #{@player2_hash["team"]}, College: #{@player2_hash["college"]}, Height: #{@player2_hash["height"]}, Weight: #{@player2_hash["weight"]} lbs)".bold
+    puts "========================================================================================================"
     puts "Type 1 to select #{@player1_hash["displayName"]} or 2 to select #{@player2_hash["displayName"]}".bold
-    puts "========================================================================="
+    puts "========================================================================================================"
   end
   
 
@@ -163,22 +163,22 @@ class Ranking_CLI
   end
 
   def exit
-    puts "=========================================================================="
+    puts "========================================================================================================"
     puts "Top 5 Quarterbacks".bold.underline
     sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@qb_vote_hash),5)
-    puts "=========================================================================="
+    puts "========================================================================================================"
     puts "Top 5 Wide Receivers".bold.underline
     sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@wr_vote_hash),5)
-    puts "=========================================================================="
+    puts "========================================================================================================"
     puts "Top 5 Running Backs".bold.underline
     sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@rb_vote_hash),5)
-    puts "=========================================================================="
+    puts "========================================================================================================"
     puts "Top 5 Tight Ends".bold.underline
     sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@te_vote_hash),5)
-    puts "=========================================================================="
+    puts "========================================================================================================"
     puts "Top 5 Kickers".bold.underline
     sort_converted_pstore_hash_to_rankings(convert_pstore_to_hash(@@k_vote_hash),5)
-    puts "=========================================================================="
+    puts "========================================================================================================"
     abort
   end
 
